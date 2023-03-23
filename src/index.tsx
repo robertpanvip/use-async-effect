@@ -1,9 +1,25 @@
 import * as React from "react"
+import type {DependencyList, EffectCallback} from "react";
 
-interface TestProps {
-}
+type EffectCallbackPromise<R> = () => Promise<R>
+type PromiseEffectCallback<R> = EffectCallback | EffectCallbackPromise<R>;
 
-const Test: React.FC<TestProps> = (props) => {
-    return (<div>React + vite + Ts</div>)
+function usePromiseEffect<R> (
+    effect: PromiseEffectCallback<R>,
+    cleanup: (result: R) => void,
+    deps?: DependencyList
+){
+    React.useEffect(() => {
+        const promise = effect();
+        let result:R;
+        if (promise && "then" in promise && typeof promise.then === "function") {
+            promise.then((res) => {
+                result = res;
+            })
+        }
+        return () => {
+            cleanup(result)
+        }
+    }, deps)
 }
-export default Test
+export default usePromiseEffect

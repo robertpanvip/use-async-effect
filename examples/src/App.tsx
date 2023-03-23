@@ -1,10 +1,14 @@
 import * as React from "react";
-import Test from "../../src"
+import usePromiseEffect from "../../src"
 
 export default function App() {
+    usePromiseEffect(() => {
+
+    }, () => {
+
+    }, [])
     return (
         <div>
-            <Test/>
         </div>
     )
 }
