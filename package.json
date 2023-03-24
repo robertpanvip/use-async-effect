@@ -38,6 +38,10 @@
   "bugs": {
     "url": "https://github.com/robertpanvip/use-async-effect/issues"
   },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "author": "pan",
   "license": "ISC"
 }
