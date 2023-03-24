@@ -1,3 +1,4 @@
 {
-  "entry": "./src/index.tsx"
+  "entry": "./src/index.tsx",
+  "publishDir": "../use-async-effect-npm"
 }
