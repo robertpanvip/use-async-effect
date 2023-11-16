@@ -2,33 +2,33 @@ import * as React from "react";
 import useAsyncEffect from "../../src"
 
 const TextComponent = () => {
-    useAsyncEffect(async (ref) => {
-        console.log('mounted',ref);
-        const res = await new Promise<{a:number,b:number}>((resolve, reject) => {
-            setTimeout(() => {
-                console.log('loadData',ref);
-                resolve({a: 123, b: 456})
-            }, 2000)
-        })
+    useAsyncEffect(() => {
+        let res:object;
         return {
-            ...res,
-        };
-    }, (params) => {
-        console.log('unmounted',params?.a);
+            async effect(ref) {
+                console.log('mounted', ref);
+                res = await new Promise<{ xxx: number }>((resolve, reject) => {
+                    setTimeout(() => {
+                        console.log('loadDataxx', ref);
+                        resolve({ xxx: 2 })
+                    }, 2000)
+                })
+                res = await new Promise<{ a: number, b: number }>((resolve, reject) => {
+                    setTimeout(() => {
+                        console.log('loadData', ref);
+                        reject({a: 123, b: 456})
+                    }, 2000)
+                })
+                return ()=>{
+
+                }
+            },
+            cleanup() {
+                console.log('cleanup',res);
+            }
+        }
     }, [])
 
-    useAsyncEffect((ref) => {
-        console.log('mounted',ref);
-         new Promise<{a:number,b:number}>((resolve, reject) => {
-            setTimeout(() => {
-                console.log('loadData',ref);
-                resolve({a: 123, b: 456})
-            }, 2000)
-        })
-        return ()=>{
-            console.log('unmounted');
-        }
-    },[])
     return <div>useAsyncEffect-test</div>
 }
 
